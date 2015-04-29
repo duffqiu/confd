@@ -9,6 +9,8 @@ RUN curl  -L -O -k https://github.com/kelseyhightower/confd/releases/download/v0
 
 RUN mv confd-0.9.0-linux-amd64 /usr/bin/confd
 
+RUN chmod +x /usr/bin/confd
+
 VOLUME /etc/confd/conf.d/
 
 VOLUME /etc/confd/templates/
