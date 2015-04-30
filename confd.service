@@ -19,7 +19,7 @@ ExecStart=/usr/bin/docker run \
                               -v /home/core/confd/workspace/:/workspace/ \
                               --dns ${COREOS_PRIVATE_IPV4} \
                               --dns-search ${DOMAIN_NAME} \
-                              duffqiu/confd:latest -backend etcd -srv-domain ${DOMAIN_NAME} -log-level info -interval=30
+                              duffqiu/confd:latest -backend etcd -srv-domain ${DOMAIN_NAME} -log-level info -interval=30 -confdir /etc/confd
 ExecStop=/usr/bin/docker stop confd-%H
 
 [X-Fleet]
