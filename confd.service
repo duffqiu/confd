@@ -1,0 +1,27 @@
+[Unit]
+Description=confd service for haproxy with etcd
+After=docker.service
+Before=haproxy.service
+
+[Service]
+Restart=on-failure
+RestartSec=600
+EnvironmentFile=/etc/environment
+Environment="DOMAIN_NAME=cluster.duffqiu.org"
+ExecStartPre=-/usr/bin/docker kill confd-%H
+ExecStartPre=-/usr/bin/docker rm confd-%H
+ExecStartPre=/usr/bin/docker pull duffqiu/confd:latest
+ExecStart=/usr/bin/docker run \
+                              --name confd-%H \
+                              --hostname confd-%H.${DOMAIN_NAME} \
+                              -v /home/core/confd/conf.d/:/etc/confd/conf.d/:ro \
+                              -v /home/core/confd/templates:/etc/confd/templates/:ro \
+                              -v /home/core/confd/workspace/:/workspace/ \
+                              --dns ${COREOS_PRIVATE_IPV4} \
+                              --dns-search ${DOMAIN_NAME} \
+                              duffqiu/confd:latest -backend etcd -srv-domain ${DOMAIN_NAME} -log-level info -interval=30
+ExecStop=/usr/bin/docker stop confd-%H
+
+[X-Fleet]
+Global=true
+

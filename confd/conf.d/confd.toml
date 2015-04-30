@@ -1,7 +1,0 @@
-backend = "etcd"
-confdir = "/etc/confd"
-log-level = "info"
-interval = 60
-prefix = "/confd"
-scheme = "http"
-srv_domain = "cluster.duffqiu.org"
