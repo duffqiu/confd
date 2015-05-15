@@ -5,7 +5,7 @@ Before=haproxy.service
 
 [Service]
 Restart=on-failure
-RestartSec=600
+RestartSec=60
 EnvironmentFile=/etc/environment
 Environment="DOMAIN_NAME=cluster.duffqiu.org"
 ExecStartPre=-/usr/bin/docker kill confd-%H
